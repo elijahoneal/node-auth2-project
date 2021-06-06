@@ -1,10 +1,9 @@
 const db = require('../../data/db-config.js');
 
 function find() {
-  return db('users as u')
-          .join('roles as r', 'u.role_id', 'r.role_id' )
-          .select('u.user_id', 'u.username', 'r.role_name')
-          .orderBy('user_id', 'ASC')
+  return db('users')
+          .join('roles', 'users.role_id', 'roles.role_id' )
+          .select('users.user_id', 'users.username', 'roles.role_name')
   /**
     You will need to join two tables.
     Resolves to an ARRAY with all users.
@@ -49,6 +48,7 @@ function findById(user_id) {
           .join('roles as r', 'u.role_id', 'r.role_id')
           .select('u.user_id', 'u.username', 'r.role_name')
           .where(user_id)
+          .fist()
   /**
     You will need to join two tables.
     Resolves to the user with the given user_id.
